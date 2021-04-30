@@ -1,0 +1,8 @@
+{
+    "mysql": {
+        "host": "host.docker.internal",
+        "port": 3306,
+        "label_db": "label",
+        "num_retry": 5
+    }
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <title>Page Title</title>
+    </head>
+    <body>
+        
+        <div class="container w-50 py-5">
+            <h2>Start</h2>
+            
+            <form action="/label" method="post">
+                <div class="row py-5">
+                    <div class="form-group col-sm">
+                        <label for="image_id_list_textarea">Image IDs (one image_id per row)</label>
+                        <textarea class="form-control" id="image_id_list_textarea" rows="10" name="image_id_list"></textarea>
+                    </div>
+                    <div class="col-sm">
+                        <div class="form-group">
+                            <label for="input_labelled_by">labelled by</label>
+                            <input type="text" class="form-control" id="input_labelled_by" name="labelled_by">
+                        </div>
+                        <div class="form-group">
+                            <label for="input_label_memo">memo</label>
+                            <input type="text" class="form-control" id="input_label_memo" name="label_memo">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+    </body>
+</html>

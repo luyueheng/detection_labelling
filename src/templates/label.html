@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.3.1/fabric.min.js"></script>
+        <!-- <script src="http://twitter.github.io/typeahead.js/releases/latest/typeahead.bundle.min.js"></script> -->
+        <script src="static/bootstrap-combobox.js"></script>
+        <style src="static/bootstrap-combobox.css"></style>
+        <script>
+            var image_path = "{{ image_path }}";
+            var existing_labels = JSON.parse('{{ existing_labels_json | safe }}');
+            var object_type_list = JSON.parse('{{ object_type_list | safe }}');
+        </script>
+        <title>Page Title</title>
+    </head>
+    <body>
+        
+        <div class="container py-3">
+            
+            <h2>Image ID: {{ image_id }}</h2>
+            <pre>room type: {{ image_property['room_type'] }},  style: {{ image_property['style'] }},  labelled by: {{ image_property['labelled_by'] }},  memo: {{ image_property['label_memo'] }},  time: {{ image_property['label_time'] }}</pre>
+            
+            <div class="row">
+                <div id="canvas_container" class="col-md-7">
+                    <canvas id="canvas"></canvas>
+                    <div class="py-3">
+                        <ul class="pagination pagination-sm justify-content-center">
+                            {% if previous_image_id != '' %}
+                            <li class="page-item">
+                                <a class="page-link" href="/label?labelled_by={{ labelled_by }}&image_id={{ previous_image_id }}">Previous</a>
+                            </li>
+                            {% endif %}
+                            {% if next_image_id != '' %}
+                            <li class="page-item">
+                                <a class="page-link" href="/label?labelled_by={{ labelled_by }}&image_id={{ next_image_id }}">Next</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <form action="/label?labelled_by={{ labelled_by }}&image_id={{ next_image_id }}" method="post">
+                        <div id="label_rows">
+                            <!-- <label for="object_type">Object Type</label>
+                            <input type="text" class="form-control" id="object_type" name="object_type">-->
+                            <input type="hidden" name="labelled_by" value="{{ labelled_by }}">
+                            <input type="hidden" name="image_id" value="{{ image_id }}">
+                            <!-- <div class="row">
+                                <div class="col-md-3">
+                                     <p>68hy67</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" id="object_type" name="object_type">
+                                </div>
+                                <div class="col-md-3">
+                                     
+                                    <button type="button" class="btn btn-danger">
+                                        Delete
+                                    </button>
+                                </div>
+                            </div> -->
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-10"></div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                    <br><br>
+                    <div class="row">
+                        <div class="col-md-10"></div>
+                        <div class="col-md-2">
+                            <a href="/quit?labelled_by={{ labelled_by }}">
+                                <button type="quit" class="btn btn-sm btn-danger">Quit</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script src="static/label.js"></script>
+        </div>
+    </body>
+</html>
