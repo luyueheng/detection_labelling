@@ -58,10 +58,10 @@ class Backend:
         connection.ping(reconnect=True)
         with connection.cursor() as cursor:
             cursor.execute("select * from image where image_id = %s", [image_id])
-            image_result = cursor.fetchall()
+            image_result = cursor.fetchall()[0]
             cursor.close()
         db_results['image_id'] = image_id
-        # image_path?
+        db_results['image_path'] = 'static/' + image_result.get('image_path', '')
         db_results['room_type'] = image_result.get('room_type', '')
         db_results['style'] = image_result.get('style', '')
         db_results['labelled_by'] = image_result.get('labelled_by', '')
@@ -76,7 +76,10 @@ class Backend:
             obj_dict = {}
             obj_dict['object_id'] = obj['object_id']
             obj_dict['object_type'] = obj.get('object_type', '')
-            obj_dict['box'] = obj['box']
+            obj_dict['box_left'] = obj['box_left']
+            obj_dict['box_top'] = obj['box_top']
+            obj_dict['box_right'] = obj['box_right']
+            obj_dict['box_bottom'] = obj['box_bottom']
             db_results['objects'].append(obj_dict)
         return Image(db_results)
     
@@ -89,13 +92,13 @@ class Backend:
             old_object_id_list = [r['object_id'] for r in object_result]
             for label_obj in label_objects:
                 # Update
-                if label_obj['object_id'] in old_object_id_list:
+                if label_obj.object_id in old_object_id_list:
                     cursor.execute("update object set object_type = %s, box_left = %s, box_top = %s, box_right = %s, box_bottom = %s, where object_id = %s;",
-                        [label_obj['object_type'], label_obj['box_left'], label_obj['box_top'], label_obj['box_right'], label_obj['box_bottom'], label_obj['object_id']])
+                        [label_obj.object_type, label_obj.box_left, label_obj.box_top, label_obj.box_right, label_obj.box_bottom, label_obj.object_id])
                 # Add
                 else:
                     cursor.execute("insert into object(object_id, image_id, object_type, box_left, box_top, box_right, box_bottom) value (%s, %s, %s, %s, %s, %s, %s);",
-                        [label_obj['object_id'], image_id, label_obj['object_type'], label_obj['box_left'], label_obj['box_top'], label_obj['box_right'], label_obj['box_bottom']])
+                        [label_obj.object_id, image_id, label_obj.object_type, label_obj.box_left, label_obj.box_top, label_obj.box_right, label_obj.box_bottom])
             for obj_id in old_object_id_list:
                 if obj_id not in [obj.object_id for obj in label_objects]:
                     cursor.execute("delete from object where object_id = %s;"), [obj_id]

@@ -9,7 +9,7 @@ img.onload = function() {
     canvas.setWidth(canvas_width);
     scale_factor = canvas_width / img_w;
     canvas.setHeight(scale_factor * img_h);
-    canvas.setBackgroundImage(cloudfront_path, canvas.renderAll.bind(canvas),{
+    canvas.setBackgroundImage(image_path, canvas.renderAll.bind(canvas),{
         scaleX: scale_factor,
         scaleY: scale_factor,
         originX: 'left',
@@ -25,7 +25,7 @@ img.onload = function() {
             existing_labels[i]['box_bottom'] * scale_factor);
     }
 };
-img.src = cloudfront_path;
+img.src = image_path;
 
 canvas.selection = false;
 var rect, ellipse, line, triangle, isDown, origX, origY, textVal, activeObj;
