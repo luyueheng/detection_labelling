@@ -61,7 +61,7 @@ def label():
             label_objects = parse_label_result(request.form)
             previous_image_id = int(request.form['image_id'])
             backend.update_image_labels(previous_image_id, label_objects)
-            backend.update_image_labels(
+            backend.update_image_metadata(
                 previous_image_id, labelled_by, label_status[labelled_by]['label_memo'])
             # print(request.form)
             current_index = label_status[labelled_by]['next_index']

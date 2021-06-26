@@ -93,7 +93,7 @@ class Backend:
             for label_obj in label_objects:
                 # Update
                 if label_obj.object_id in old_object_id_list:
-                    cursor.execute("update object set object_type = %s, box_left = %s, box_top = %s, box_right = %s, box_bottom = %s, where object_id = %s;",
+                    cursor.execute("update object set object_type = %s, box_left = %s, box_top = %s, box_right = %s, box_bottom = %s where object_id = %s;",
                         [label_obj.object_type, label_obj.box_left, label_obj.box_top, label_obj.box_right, label_obj.box_bottom, label_obj.object_id])
                 # Add
                 else:
@@ -101,7 +101,7 @@ class Backend:
                         [label_obj.object_id, image_id, label_obj.object_type, label_obj.box_left, label_obj.box_top, label_obj.box_right, label_obj.box_bottom])
             for obj_id in old_object_id_list:
                 if obj_id not in [obj.object_id for obj in label_objects]:
-                    cursor.execute("delete from object where object_id = %s;"), [obj_id]
+                    cursor.execute("delete from object where object_id = %s;", [obj_id])
             connection.commit()
             cursor.close()
     
